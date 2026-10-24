@@ -1,0 +1,19 @@
+{
+  "nim.provider": "lsp",
+  "nim.lsp.path": "",
+  "nim.useNimCheck": false,
+  "nim.checkOnSave": true,
+  "nim.autoCheckFile": false,
+  "nim.logNimsuggest": false,
+  "nim.projectMapping": [
+    {
+      "projectFile": "examples/router_runes/app.nim",
+      "fileRegex": "examples/router_runes/.*\\.nim"
+    },
+    {
+      "projectFile": "src/karax_utils.nim",
+      "fileRegex": "src/(router|runes)/.*\\.nim"
+    }
+  ],
+  "nim.inlayHints.exceptionHints.enable": false
+}
