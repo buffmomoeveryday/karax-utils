@@ -72,6 +72,7 @@ template mutate*[T](s: State[T], body: untyped) =
   block:
     template it(): untyped {.inject.} =
       s.val
+
     body
   s.touch()
 

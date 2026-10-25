@@ -186,9 +186,14 @@ let appRouter = karaxRouter(guards = @[authGuard], ignoreRoutes = @["/login"])
 
 proc navLink(path, label: string): VNode =
   let here = getRoute() == path
+
   buildHtml(
     button(
-      class = if here: navActive else: navIdle,
+      class =
+        if here:
+          cstring(navActive)
+        else:
+          cstring(navIdle),
       onclick = proc(ev: Event, n: VNode) =
         navigateTo(path),
     )
@@ -224,8 +229,6 @@ template layout*(contents: untyped): VNode =
 # --- Home --------------------------------------------------------------------
 
 proc homeView(): VNode =
-  # Not `homeView().onMount:` — that calls the view and passes a VNode.
-  # Hooks go *inside* the view with a stable string key:
   onMount("home"):
     echo "[lifecycle] home mount"
   onDestroy("home"):
@@ -269,6 +272,7 @@ proc homeView(): VNode =
 proc stepStatNode(): VNode =
   result = buildHtml(p(class = statLine)):
     text "step = " & $step.value
+
   result.withClass("text-red-500 font-semibold", step.value > 10)
 
 proc stepDownButton(): VNode =
@@ -331,7 +335,7 @@ proc bindingsView(): VNode =
           onclick = proc(ev: Event, n: VNode) =
             count.value = count.value - step.value,
         ):
-          text "count −"
+          text "count -"
         button(
           class = btnPrimary,
           onclick = proc(ev: Event, n: VNode) =
@@ -358,7 +362,11 @@ proc filterChip(label: string, f: TodoFilter): VNode =
   let on = todoFilter.value == f
   buildHtml(
     button(
-      class = if on: filterActive else: filterIdle,
+      class =
+        if on:
+          cstring(filterActive)
+        else:
+          cstring(filterIdle),
       onclick = proc(ev: Event, n: VNode) =
         applyTodoFilter(f),
     )
@@ -385,7 +393,7 @@ proc todoRow(item: Todo): VNode =
     )
   ):
     box
-    span(class = titleClass):
+    span(class = cstring(titleClass)):
       text item.title
     button(
       class = btn,
